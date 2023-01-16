@@ -1,0 +1,15 @@
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  "outputDirectory": "dist",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "x-robots-tag",
+          "value": "undefined"
+        }
+      ]
+    }
+  ]
+}
