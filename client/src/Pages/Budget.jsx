@@ -34,6 +34,7 @@ const Budget = () => {
     }
     return { budgetSet: false, value: 0 };
   });
+  const loading = useSelector((state) => state.user.budget.loading);
   const loggedIn = useSelector((state) => state.user.loggedIn);
   const userLoading = useSelector((state) => state.user.loading);
   const stale = useSelector((state) => state.user.budget.stale);
@@ -46,7 +47,7 @@ const Budget = () => {
   }, [loggedIn, userLoading, navigate]);
   useEffect(() => {
     dispatch(userActions.getBudget());
-  }, [budget, stale, dispatch]);
+  }, [budget, stale, loading, dispatch]);
   useEffect(() => {
     getCurrent();
   }, []);
@@ -116,6 +117,27 @@ const Budget = () => {
       return <b className={className}>{formatMoney(currentMoney.value)}</b>;
     }
   }
+  function displayBudget() {
+    if (loading) {
+      return (
+        <MDBSpinner role="status">
+          <span className="visually-hidden">Loading...</span>
+        </MDBSpinner>
+      );
+    } else if (budget.budgetSet) {
+      return (
+        <MDBBtn onClick={() => setModal(!modal)} className="fs-5" color="link">
+          {formatMoney(budget.value)}
+        </MDBBtn>
+      );
+    } else {
+      return (
+        <MDBBtn onClick={() => setModal(!modal)} className="fs-5" color="link">
+          Not Set
+        </MDBBtn>
+      );
+    }
+  }
   return (
     <Layout>
       <MDBContainer style={{ marginTop: "120px" }}>
@@ -136,13 +158,7 @@ const Budget = () => {
                 }}
               >
                 <b> Total Budget : </b>
-                <MDBBtn
-                  onClick={() => setModal(!modal)}
-                  className="fs-5"
-                  color="link"
-                >
-                  {budget.budgetSet ? formatMoney(budget.value) : "Not Set"}
-                </MDBBtn>
+                {displayBudget()}
               </div>
               <div
                 style={{
