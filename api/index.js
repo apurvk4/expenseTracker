@@ -506,4 +506,4 @@ connect()
 
   .catch((err) => {
     console.log(err);
-  }); // connect to db
+  }); // connect to database
