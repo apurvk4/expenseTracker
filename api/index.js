@@ -18,7 +18,10 @@ const paid_transaction = require("./paid_transaction");
 const app = express();
 mongoose.set("strictQuery", false);
 function corsMiddleWare(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:4000");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://expense-tracker-wev3.vercel.app"
+  );
   res.removeHeader("X-powered-by");
   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,PATCH,POST,DELETE");
   res.setHeader("Access-Control-Allow-Credentials", "true");
